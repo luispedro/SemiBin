@@ -140,6 +140,7 @@ subprocess.check_call(
         '-o', multi_self_output,
         '-b'] + multi_sample_input_bams + [
         '-s', ':',
+        '--no-recluster',
         '--epochs', '1',
         '--self-supervised'])
 
