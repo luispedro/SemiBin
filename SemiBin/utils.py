@@ -32,17 +32,7 @@ def possibly_compressed_write(filename):
         if g is not f:
             g.close()
 
-def check_training_type(logger, args):
-    args.training_type = 'auto'
-
-    if args.training_type == 'semi' and args.self_supervised:
-        logger.error('Both --training-type=semi and --self-supervised arguments used')
-        sys.exit(1)
-
-    if args.training_type == 'self' and args.semi_supervised:
-        logger.warning('Both --training-type=self and --semi-supervised arguments used')
-        sys.exit(1)
-
+def set_training_type(logger, args):
     if not args.self_supervised and not args.semi_supervised:
         logger.debug(
             f"SemiBin will run in self supervised mode")
@@ -225,12 +215,11 @@ def validate_normalize_args(logger, args):
             expect_file_list(args.bams)
         if args.abundances:
             expect_file_list(args.abundances)
-
         else:
-            check_training_type(logger, args)
+            set_training_type(logger, args)
 
     if args.cmd == 'multi_easy_bin':
-        check_training_type(logger, args)
+        set_training_type(logger, args)
         if args.GTDB_reference is not None:
             expect_file(args.GTDB_reference)
         expect_file(args.contig_fasta)
