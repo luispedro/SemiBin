@@ -89,9 +89,9 @@ This will install SemiBin with GPU support, but it does require a CUDA-compatibl
 
 You will need the following dependencies:
 
-- [Bedtools](http://bedtools.readthedocs.org/]), [Hmmer](http://hmmer.org/)
+- [Bedtools](http://bedtools.readthedocs.org/)
+- [Hmmer](http://hmmer.org/)
 - [Samtools](https://github.com/samtools/samtools)
-- HMMER
 
 The easiest way to install the dependencies is with [conda](https://conda.io):
 
