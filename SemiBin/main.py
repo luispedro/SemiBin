@@ -547,7 +547,7 @@ def parse_args(args):
         p.add_argument('--random-seed',
                        required=False,
                        type=int,
-                       help='Random seed. Set it to a fixed value to reproduce results across runs. The default is that the seed is set by the system and .',
+                       help='Random seed. Set it to a fixed value to reproduce results across runs. The default is that the seed is set by the system and results may vary between runs.',
                        dest='random_seed',
                        default=None,
                        )
