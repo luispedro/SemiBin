@@ -51,11 +51,15 @@ def run_prodigal(fasta_path, num_process, output):
                 process.append(p)
 
         for p in process:
-            p.wait()
+            rc = p.wait()
+            if rc != 0:
+                sys.stderr.write(
+                    f"Error: prodigal exited with return code {rc}\n")
+                sys.exit(1)
 
-    except subprocess.CalledProcessError as e:
+    except OSError as e:
         sys.stderr.write(
-            f"Error: Running prodigal fail: {e}\n")
+            f"Error: Running prodigal failed: {e}\n")
         sys.exit(1)
 
     else:

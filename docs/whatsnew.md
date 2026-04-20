@@ -11,6 +11,7 @@
 
 ### Internal improvements and bugfixes
 
+- Fix prodigal errors being silently ignored (non-zero exit codes are now detected and reported)
 - Fix for newer version of igraph ([#208](https://github.com/BigDataBiology/SemiBin/issues/208))
 - Add testing on Python 3.14
 

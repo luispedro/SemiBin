@@ -1,4 +1,5 @@
 Unreleased
+	* orffinding: Fix prodigal errors being silently ignored
 	* SemiBin1: removed
 	* SemiBin: Add support for `SEMIBIN_DEBUG` environment variable
 	* cluster: Fix call to newer infomap (#208)
