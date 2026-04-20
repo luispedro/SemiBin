@@ -71,7 +71,7 @@ def parse_args(args):
 
 
 
-    generate_sequence_features_multi = subparsers.add_parser('generate_sequence_features_multi', aliases=['generate_sequence_features_multi'],
+    generate_sequence_features_multi = subparsers.add_parser('generate_sequence_features_multi',
                                             help='Generate sequence features (kmer and abundance) as training data'
                                                   ' for (semi/self)-supervised deep learning model training (multi-sample mode).'
                                                   ' This will produce the data.csv and data_split.csv files.'
