@@ -356,7 +356,7 @@ def train_semi(logger, out, contig_fastas, binned_lengths, datas, data_splits, c
                 unlabeled_train_input1 = unlabeled_train_input1.to(device)
                 unlabeled_train_input2 = unlabeled_train_input2.to(device)
                 embedding1, embedding2 = model.forward(
-                    unlabeled_train_input1.float(), unlabeled_train_input1.float())
+                    unlabeled_train_input1.float(), unlabeled_train_input2.float())
                 decoder1, decoder2 = model.decoder(embedding1, embedding2)
                 optimizer.zero_grad()
                 loss = loss_function(embedding1.double(), embedding2.double(),
