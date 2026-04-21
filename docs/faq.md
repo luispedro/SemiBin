@@ -6,7 +6,7 @@ Starting in _version 1.4_, **yes**!
 
 While the original version of SemiBin could be applied to long-read data, it was suboptimal as the data looks different enough from short-read data (even post assembly).
 Starting with version 1.4, SemiBin supports an alternative clustering procedure which gives much better results when applied to long-reads assemblies (including hybrid assemblies).
-Use the flag `--sequencing-data=long_reads` when binning.
+Use the flag `--sequencing-type=long_read` when binning.
 
 See the [SemiBin2 manuscript](https://doi.org/10.1093/bioinformatics/btad209) for a description and benchmarking of the long-read algorithm.
 

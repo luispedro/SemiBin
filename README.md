@@ -89,7 +89,7 @@ This will install SemiBin with GPU support, but it does require a CUDA-compatibl
 
 You will need the following dependencies:
 
-- [Bedtools](http://bedtools.readthedocs.org/)
+- [Bedtools](http://bedtools.readthedocs.org/en/latest/)
 - [Hmmer](http://hmmer.org/)
 - [Samtools](https://github.com/samtools/samtools)
 
@@ -119,7 +119,7 @@ For the details and examples of every SemiBin subcommand, please [read the docs]
 ## Binning assemblies from long reads
 
 Since version 1.4, SemiBin proposes new algorithm (ensemble based DBSCAN algorithm) for binning assemblies from long reads. 
-To use it, you can used the subcommands `bin_long` or pass the option  `--sequencing-type=long_read` to the `single_easy_bin` or `multi_easy_bin` subcommands.
+To use it, you can use the subcommands `bin_long` or pass the option  `--sequencing-type=long_read` to the `single_easy_bin` or `multi_easy_bin` subcommands.
 
 
 ## Easy single/co-assembly binning mode
@@ -229,7 +229,7 @@ As strobealign-aemb can not provide the mapping information for every position o
 
 1. split the FASTA files to generate the must-link constraints
 ```bash
-python script/generate_split.py -c contig.fa -o output
+SemiBin2 split_contigs -i contig.fa -o output
 ```
 2. map reads using [strobealign-aemb](https://github.com/ksahlin/strobealign) to generate the abundance information
 ```bash
@@ -244,7 +244,7 @@ strobealign --aemb output/split.fa read5_1.fq read5_2.fq -R 6 > sample5.txt
 SemiBin2 generate_sequence_features_single -i contig.fa -a *.txt -o output
 SemiBin2 generate_sequence_features_multi -i contig.fa -a *.txt -s : -o output
 SemiBin2 single_easy_bin -i contig.fa -a *.txt -o output
-SemiBin2 multi_easy_bin i contig.fa -a *.txt -s : -o output
+SemiBin2 multi_easy_bin -i contig.fa -a *.txt -s : -o output
 ```
 
 ## Output

@@ -77,7 +77,7 @@ This will install SemiBin and all its dependencies. Pixi is—however—the reco
 ## Install from source
 
 You will need the following dependencies:
-- [Bedtools](http://bedtools.readthedocs.org/]), [Hmmer](http://hmmer.org/)
+- [Bedtools](http://bedtools.readthedocs.org/en/latest/), [Hmmer](http://hmmer.org/)
 - [Prodigal](https://github.com/hyattpd/Prodigal)
 
 

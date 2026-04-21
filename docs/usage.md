@@ -311,7 +311,7 @@ SemiBin2 multi_easy_bin \
 
 📝 For hybrid assemblies (both short and long reads), treat them as long-read assemblies and use the `--sequencing-type long_read` flag.
 
-### Advanced multi-sample binning workflows workflows
+### Advanced multi-sample binning workflows
 
 As with the other modes, the `multi_easy_bin` subcommand encapsulates a series of steps that can also be run independently for more control.
 They can also be parallelized in a compute cluster, for example.
