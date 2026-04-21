@@ -436,8 +436,8 @@ def split_data(data, sample, separator, is_combined = True):
     split data according their sample in multi-sample binning
     """
     import numpy as np
-    part_data = data[data['contig_name'].str.contains(
-        sample + separator, regex=False)]
+    part_data = data[data['contig_name'].str.startswith(
+        sample + separator)]
     part_data = part_data.set_index('contig_name')
     part_data.index.name = None
     part_data.index = [ix.split(separator)[1] for ix in part_data.index]
