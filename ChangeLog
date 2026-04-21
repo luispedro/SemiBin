@@ -1,9 +1,13 @@
 Unreleased
 	* orffinding: Fix prodigal errors being silently ignored
+	* semi-supervised: Fix wrong input in unlabeled contrastive learning
+	* SemiBin: Remove '--environment' parameter in command that learns a new model (#218)
+	* SemiBin: Accept 'hybrid' as a synonym for 'long_reads' in --sequencing-type (#216)
 	* SemiBin1: removed
+
+Version 2.2.1 Dec 7 2025 by BigDataBiology
 	* SemiBin: Add support for `SEMIBIN_DEBUG` environment variable
 	* cluster: Fix call to newer infomap (#208)
-	* SemiBin: Accept 'hybrid' as a synonym for 'long_reads' in --sequencing-type (#216)
 
 Version 2.2.0 Mar 20 2025 by BigDataBiology
 	* logging: Use 'SemiBin2' as logger name

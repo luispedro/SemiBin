@@ -1,5 +1,18 @@
 # What's New
 
+## Unreleased
+
+### User-visible changes
+
+- Accept `hybrid` as a synonym for `long_reads` in `--sequencing-type` ([#216](https://github.com/BigDataBiology/SemiBin/issues/216))
+- Remove `--environment` parameter in command that learns a new model ([#218](https://github.com/BigDataBiology/SemiBin/issues/218))
+- Remove SemiBin1
+
+### Internal improvements and bugfixes
+
+- Fix prodigal errors being silently ignored (non-zero exit codes are now detected and reported)
+- Fix wrong input in semi-supervised unlabeled contrastive learning
+
 ## Version 2.2.1
 
 *Released Dec 7, 2025*
@@ -7,13 +20,10 @@
 ### User-visible changes
 
 - Add support for `SEMIBIN_DEBUG` environment variable to enable debug logging (overrides command line flags)
-- Accept `hybrid` as a synonym for `long_reads` in `--sequencing-type` ([#216](https://github.com/BigDataBiology/SemiBin/issues/216))
 
 ### Internal improvements and bugfixes
 
-- Fix prodigal errors being silently ignored (non-zero exit codes are now detected and reported)
 - Fix for newer version of igraph ([#208](https://github.com/BigDataBiology/SemiBin/issues/208))
-- Add testing on Python 3.14
 
 
 ## Version 2.2.0
