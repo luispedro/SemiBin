@@ -139,6 +139,8 @@ def model_load(path, device, warn_on_old_format=True):
         model = Semi_encoding_single(saved['params'][0])
     elif saved['model_name'] == 'Semi_encoding_multiple':
         model = Semi_encoding_multiple(saved['params'][0])
+    else:
+        raise ValueError(f"Unknown model name: '{saved['model_name']}'")
     model.load_state_dict(saved['model_state_dict'])
     return model.to(device)
 
