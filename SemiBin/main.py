@@ -82,7 +82,7 @@ def parse_args(args):
 
     check_install.add_argument('--allow-missing-mmseqs2',
             required=False,
-            help='Do not fail is MMSeqs2 is not found. MMSeqs2 is required for semi-supervised learning, but not self-supervised learning.',
+            help='(Deprecated, no-op) Do not fail if MMSeqs2 is not found. MMSeqs2 is required for semi-supervised learning, but not self-supervised learning.',
             dest='allow_missing_mmseqs2',
             default=True,
             action='store_true', )
