@@ -149,7 +149,6 @@ These are the are same as for `single_easy_bin`.
 * `--ratio`
 * `--min-len`
 * `--ml-threshold`
-* `--depth-metabat2`
 * `--tmpdir`
 
 These are same as for `single_easy_bin`.
