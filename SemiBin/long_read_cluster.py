@@ -75,7 +75,7 @@ def cluster_long_read(logger, model, data, device, is_combined,
         depth = data.values[:, 136:len(data.values[0])].astype(np.float32)
         mean_index = [2 * temp for temp in range(n_sample)]
         depth = depth[:, mean_index]
-        embedding_new = np.concatenate((embedding, np.log(depth)), axis=1)
+        embedding_new = np.concatenate((embedding, np.log(np.clip(depth, 1e-6, None))), axis=1)
     else:
         embedding_new = embedding
 
