@@ -653,9 +653,7 @@ def check_install(verbose, orf_finder=None, allow_missing_mmseqs2=False):
                 elif verbose:
                     print(f'\t{dep} not found. Semi-supervised training (deprecated) will not be possible')
             elif dep == 'prodigal':
-                if orf_finder == 'fast-naive':
-                    pass
-                elif not has_fgs:
+                if not has_fgs:
                     if orf_finder != 'fast-naive':
                         sys.stderr.write(
                                 'Error: neither prodigal nor FragGeneScan appear to be available!\n'
@@ -666,7 +664,7 @@ def check_install(verbose, orf_finder=None, allow_missing_mmseqs2=False):
                         sys.stderr.write(
                             'Warning: prodigal does not appear to be available (although FragGeneScan is). '
                             'You must use the `--orf-finder=fast-naive` or `--orf-finder=fraggenescan` options.\n')
-                    missing_deps = True
+                    missing_deps = (orf_finder == 'prodigal')
             elif dep == 'FragGeneScan':
                 pass
             else:
