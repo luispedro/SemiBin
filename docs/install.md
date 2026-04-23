@@ -77,11 +77,12 @@ This will install SemiBin and all its dependencies. Pixi is—however—the reco
 ## Install from source
 
 You will need the following dependencies:
-- [Bedtools](http://bedtools.readthedocs.org/en/latest/), [Hmmer](http://hmmer.org/)
-- [Prodigal](https://github.com/hyattpd/Prodigal)
+- [Bedtools](http://bedtools.readthedocs.org/en/latest/), [Hmmer](http://hmmer.org/), [Samtools](https://github.com/samtools/samtools)
 
+Optional dependencies:
+- [Prodigal](https://github.com/hyattpd/Prodigal) (only needed if using `--orf-finder prodigal`; the default `fast-naive` ORF finder does not require it)
 
-You can obtain them from conda with the following commands
+You can obtain the required dependencies from conda with the following commands
 
 ```bash
 conda install -c bioconda bedtools hmmer samtools

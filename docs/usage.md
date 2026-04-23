@@ -124,7 +124,7 @@ In particular, `single_easy_bin` includes the following steps:
 ```bash
 SemiBin2 generate_sequence_features_single -i S1.fa -b S1.sorted.bam -o S1_output
 ```
-(3) Train a model (if desired)
+(2) Train a model (if desired)
 
 ```bash
 SemiBin2 train_self \
@@ -138,7 +138,7 @@ It will attempt to auto-detect whether one is available, but you can use the `--
 
 This step can be skipped if you want to use a pretrained model.
 
-(4) Bin
+(3) Bin
 ```bash
 SemiBin2 bin_short \
     -i S1.fa \

@@ -72,7 +72,7 @@ CAT add_names \
     --only_official
 ```
 
-Generate cannot-link constrains using the script `generate_cannot_link.py` in the `scripts/` directory
+Generate cannot-link constrains using the script `generate_cannot_link.py` in the `script/` directory
 
 ```bash
 python script/generate_cannot_link.py -i CAT.out -c contig.fa -s sample-name -o output --CAT

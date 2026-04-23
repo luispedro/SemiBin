@@ -14,8 +14,8 @@ It supports single sample, co-assembly, and multi-samples binning modes.
 
 ## SemiBin2
 
-When you install the SemiBin package you get both the newer `SemiBin2` command and the older `SemiBin` command.
-It is recommended that you use the newer one exclusively for new project and the old one only for backwards compatibility.
+When you install the SemiBin package, the `SemiBin2` command is available.
+See [SemiBin2](semibin2) for more details on the differences from the older SemiBin1 interface.
 
 ## Tutorial
 

@@ -1,18 +1,16 @@
 # SemiBin2
 
-**Summary**: For new code, use the `SemiBin2` command. The only reason to use `SemiBin` or `SemiBin1` is for backwards compatibility.
+**Summary**: Use the `SemiBin2` command. As of version 2.2, only `SemiBin2` is installed.
 
-## History and future plans
+## History
 
-Starting with version 1.5 (officially _SemiBin2 beta_, released March 2023), installing the SemiBin package installs two scripts: `SemiBin` and `SemiBin2`.
-They have the same functionality, but slightly different interfaces.
-As of version 2.0 (released October 2023), the older `SemiBin` command is _not recommended_ (except for backwards compability) and newer projects should use `SemiBin2`.
+Starting with version 1.5 (officially _SemiBin2 beta_, released March 2023), installing the SemiBin package installed two scripts: `SemiBin` and `SemiBin2`.
+They had the same functionality, but slightly different interfaces.
+As of version 2.0 (released October 2023), the older `SemiBin` command was _not recommended_ (except for backwards compatibility) and newer projects should use `SemiBin2`.
 
-In version 2.1 (released March 2024), we deprecated the `SemiBin` command and introduced a more explicit `SemiBin1` subcommand for backwards compatibility.
+In version 2.1 (released March 2024), we deprecated the `SemiBin` command and introduced a more explicit `SemiBin1` command for backwards compatibility.
 
-In version 2.2 (released March 2025), `SemiBin` is not installed and `SemiBin1` was deprecated (still available, but prints a warning and adds a delay).
-
-In version 2.3, `SemiBin1` will not be installed by default.
+In version 2.2 (released March 2025), only `SemiBin2` is installed. The `SemiBin` and `SemiBin1` commands are no longer available.
 
 ## Upgrading to SemiBin2
 
@@ -38,9 +36,8 @@ The biggest different is that the default training mode is self-supervised mode.
   (and there is no `train` subcommand, you must be specific: `train_semi` or
   `train_self`).
 
-A few arguments that were deprecated before are completely removed:
+A few arguments that were deprecated before are removed:
 - `--recluster`: it did nothing already as reclustering is default
-- `--mode`: Use `--train-from-many`
-- `--training-type`: Use `--semi-supervised` to use semi-supervised learning
-  (although that is also deprecated)
+- `--mode`: use `--train-from-many` instead
+- `--training-type`: use `--semi-supervised` to use semi-supervised learning instead
 

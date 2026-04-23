@@ -16,7 +16,7 @@ mkdir -p aemb_output/sample1
 SemiBin2 split_contigs -i sample1_contigs.fna.gz -o aemb_output/sample1
 ```
 
-After this step, there will be a file `aemb_output/sample1/split_contigs.fna.gz` that contains both the original contigs as well as split versions (which are required to run SemiBin2).
+After this step, there will be a file `aemb_output/sample1/split_contigs.fna.gz` that contains the split versions of the contigs (each contig is split into two halves, named with `_1` and `_2` suffixes). Contigs shorter than the minimum length are excluded.
 
 2. Map reads using [strobealign-aemb](https://github.com/ksahlin/strobealign) to generate the abundance information. Note that version 0.13 (or newer) is required
 ```bash
@@ -80,7 +80,7 @@ SEMIBIN_THREADS = STROBEALIGN_THREADS
 def generate_inputs(s):
     contigs = f'samples/{s}_assembled.fna.gz'
     if not path.exists(contigs):
-        raise IOError(f'Expected contig file {f} (for sample {s})')
+        raise IOError(f'Expected contig file {contigs} (for sample {s})')
     out = f'aemb_output/{s}'
     makedirs(out, exist_ok=True)
     subprocess.check_call(

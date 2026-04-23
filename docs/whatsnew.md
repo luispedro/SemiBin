@@ -8,6 +8,18 @@
 - Remove `--environment` parameter in command that learns a new model ([#218](https://github.com/BigDataBiology/SemiBin/issues/218))
 - Remove SemiBin1
 
+### Documentation fixes
+
+- Fix outdated output descriptions in `docs/output.md` (default model type, missing `bins_info.tsv`/`contig_bins.tsv`, clarify `output_bins` is final output)
+- Fix wrong `split_contigs` output filename in README strobealign-aemb example (`split.fa` → `split_contigs.fna.gz`)
+- Fix `docs/aemb.md` description of `split_contigs.fna.gz` contents (only split halves, not originals) and undefined variable in helper script
+- Remove references to `--mode` and `--training-type` flags no longer accepted by SemiBin2 in `docs/subcommands.md`
+- Update `docs/semibin2.md` and `docs/index.md` to reflect that only `SemiBin2` is installed since v2.2
+- Clarify `-b`/`-a` are alternatives (not both required) in `docs/subcommands.md` for `single_easy_bin`, `generate_sequence_features_single`, and `generate_sequence_features_multi`
+- Fix `docs/generate.md` path from `scripts/` to `script/`
+- Add samtools to listed source install dependencies and clarify Prodigal is optional in `docs/install.md`
+- Fix step numbering in `docs/usage.md` (steps went 1, 3, 4 → now 1, 2, 3)
+
 ### Internal improvements and bugfixes
 
 - Fix prodigal errors being silently ignored (non-zero exit codes are now detected and reported)

@@ -233,11 +233,11 @@ SemiBin2 split_contigs -i contig.fa -o output
 ```
 2. map reads using [strobealign-aemb](https://github.com/ksahlin/strobealign) to generate the abundance information
 ```bash
-strobealign --aemb output/split.fa read1_1.fq read1_2.fq -R 6 > sample1.txt
-strobealign --aemb output/split.fa read2_1.fq read2_2.fq -R 6 > sample2.txt
-strobealign --aemb output/split.fa read3_1.fq read3_2.fq -R 6 > sample3.txt
-strobealign --aemb output/split.fa read4_1.fq read4_2.fq -R 6 > sample4.txt
-strobealign --aemb output/split.fa read5_1.fq read5_2.fq -R 6 > sample5.txt
+strobealign --aemb output/split_contigs.fna.gz read1_1.fq read1_2.fq -R 6 > sample1.txt
+strobealign --aemb output/split_contigs.fna.gz read2_1.fq read2_2.fq -R 6 > sample2.txt
+strobealign --aemb output/split_contigs.fna.gz read3_1.fq read3_2.fq -R 6 > sample3.txt
+strobealign --aemb output/split_contigs.fna.gz read4_1.fq read4_2.fq -R 6 > sample4.txt
+strobealign --aemb output/split_contigs.fna.gz read5_1.fq read5_2.fq -R 6 > sample5.txt
 ```
 3. Running SemiBin2 (like running SemiBin with BAM files)
 ```bash
@@ -252,7 +252,7 @@ SemiBin2 multi_easy_bin -i contig.fa -a *.txt -s : -o output
 The output folder will contain:
 
 1. Features computed from the data and used for training and clustering
-2. Saved semi-supervised deep learning model
+2. Saved deep learning model
 3. Output bins
 4. Table with basic information about each bin
 5. Some intermediate files

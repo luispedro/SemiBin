@@ -12,14 +12,17 @@ Most uses are covered by either the `single_easy_bin` or `multi_easy_bin` subcom
 
 Reconstruct bins with single or co-assembly binning using one command.
 
-`single_easy_bin` requires the contig file (assembly from reads), BAM files (reads mapping to the contig) as inputs and outputs reconstructed bins in the output_recluster_bins directory (see [[how to generate inputs for SemiBin](../generate)] and [[usage](../usage)] for more information).
+`single_easy_bin` requires the contig file (assembly from reads) and either BAM files or abundance files as inputs and outputs reconstructed bins in the `output_bins` directory (see [[how to generate inputs for SemiBin](../generate)] and [[usage](../usage)] for more information).
 
 #### Required arguments
 
 * `-i/--input-fasta` : Path to the input contig fasta file (`gzip` and `bzip2` compression are accepted).
-* `-b/--input-bam`: Path to the input BAM (`.bam` extension)  or CRAM (`.cram`) files. You can pass multiple BAM files, one per sample.
 * `-o/--output`: Output directory (will be created if non-existent).
-* `-a/--abundance` Path to the abundance file from strobealign-aemb. This can only be used when samples used in binning above or equal 5.
+
+One of the following is required (but not both):
+
+* `-b/--input-bam`: Path to the input BAM (`.bam` extension)  or CRAM (`.cram`) files. You can pass multiple BAM files, one per sample.
+* `-a/--abundance`: Path to the abundance file(s) from strobealign-aemb. This can only be used when 5 or more samples are provided.
 
 #### Recommended arguments
 
@@ -29,13 +32,12 @@ If your data comes from one of the habitats for which we have a prebuilt model, 
 
 If `--environment` is not given, a new model is learned, which is computationally intensive.
 
-* [SemiBin 1.4 and above] `--self-supervised` or `--semi-supervised`: specify the training algorithm used
-* [SemiBin 1.3] `--training-type`: Training algorithm used to train the model (`semi`/`self`). This is still accepted for backwards compatibility, but deprecated.
+* `--self-supervised` or `--semi-supervised`: specify the training algorithm used (default is self-supervised).
 
 The [original manuscript describing SemiBin1](https://doi.org/10.1038/s41467-022-29843-y) presents the semi-supervised approach.
 Starting in version 1.3, self-supervised learning is also supported, which should be an improvement in both results and computational resource usage.
 
-* [SemiBin 1.4 and above] `--sequencing-type=short_read`/`--sequencing-type=long_read`
+* `--sequencing-type=short_read`/`--sequencing-type=long_read`
 
 #### Optional arguments to control output
 
@@ -97,8 +99,7 @@ The command `multi_easy_bin` requires the combined contig file from several samp
 #### Optional arguments
 
 * `-s/--separator`: Used when multiple samples binning to separate sample name and contig name (Default is `:`).
-* [SemiBin 1.4 and above] `--self-supervised` or `--semi-supervised`: specify the training algorithm used
-* [SemiBin 1.3] `--training-type`: Training algorithm used to train the model (`semi`/`self`). This is still accepted for backwards compatibility, but deprecated.
+* `--self-supervised` or `--semi-supervised`: specify the training algorithm used (default is self-supervised).
 * `--reference-db-data-dir`, `--processes`, `--minfasta-kbs`, `--recluster`,`--epochs`, `--batch-size`, `--max-node`, `--max-edges`, `--random-seed`, `--ratio`, `--min-len`, `--ml-threshold`, `--no-recluster`, `--orf-finder`, `--engine` and `--tmpdir` are same as for `single_easy_bin`
 
 ### generate_cannot_links
@@ -132,16 +133,19 @@ These are the are same as for `single_easy_bin`.
 
 ### generate_sequence_features_single
 
-The subcommand `generate_sequence_features_single` requires the contig file and BAM file(s) as inputs and generates training data (`data.csv`; `data_split.csv`) for single and co-assembly binning.
+The subcommand `generate_sequence_features_single` requires the contig file and either BAM file(s) or abundance file(s) as inputs and generates training data (`data.csv`; `data_split.csv`) for single and co-assembly binning.
 
 #### Required arguments
 
 * `-i/--input-fasta`
-* `-b/--input-bam`
 * `-o/--output`
+
+One of the following is required (but not both):
+
+* `-b/--input-bam`
 * `-a/--abundance`
 
-These are the are same as for `single_easy_bin`.
+These are the same as for `single_easy_bin`.
 
 #### Optional arguments
 
@@ -155,12 +159,15 @@ These are same as for `single_easy_bin`.
 
 ### generate_sequence_features_multi
 
-The subcommand `generate_sequence_features_multi` requires the combined contig file and BAM files as inputs and generates training data (`data.csv` and `data_split.csv` files) for multi-sample binning.
+The subcommand `generate_sequence_features_multi` requires the combined contig file and either BAM files or abundance files as inputs and generates training data (`data.csv` and `data_split.csv` files) for multi-sample binning.
 
 #### Required arguments
 
 * `-i/--input-fasta`
 * `-o/--output`
+
+One of the following is required (but not both):
+
 * `-b/--input-bam`
 * `-a/--abundance`
 
@@ -184,8 +191,7 @@ Note that you can train a model from multiple samples for use in single sample b
 * `--data`: Path to the input `data.csv` file (typically generated by a previous call to `generate_sequence_features_single` or `generate_sequence_features_multi`).
 * `--data-split`: Path to the input `data_split.csv` file.
 * `-c/--cannot-link` : Path to the input cannot link file generated from other additional biological information, one row for each cannot link constraint. The file format is comma separated: `contig_1,contig_2`.
-* [SemiBin 1.4 and above] `--train-from-many`: When passed, train models from many samples (training across several samples can result in a better pre-trained model for single-sample binning). When this flag is used, you must pass `data`, `data_split`, `cannot`, and `fasta` files for corresponding sample in the exact same order. *Note:* You can only use this option when single-sample binning. Training from many samples with multi-sample binning is not supported (see [[training](../training/)] for more information).
-* [Before SemiBin 1.4] `--mode`: [single/several] Prior to SemiBin 1.4, using `--mode=several` was used for the same purpose as using `--train-from-many`. This option is still accepted for backwards compatibility, but is deprecated.
+* `--train-from-many`: When passed, train models from many samples (training across several samples can result in a better pre-trained model for single-sample binning). When this flag is used, you must pass `data`, `data_split`, `cannot`, and `fasta` files for corresponding sample in the exact same order. *Note:* You can only use this option when single-sample binning. Training from many samples with multi-sample binning is not supported (see [[training](../training/)] for more information).
 
 #### Optional arguments
 
@@ -209,8 +215,7 @@ The `train_self` subcommand requires the contig file and outputs from the `gener
 * `-o/--output` (same as for `single_easy_bin`)
 * `--data`: Path to the input `data.csv` file (typically generated by a previous call to `generate_sequence_features_single` or `generate_sequence_features_multi`).
 * `--data-split`: Path to the input `data_split.csv` file.
-* [SemiBin 1.4 and above] `--train-from-many`: When passed, train models from many samples (training across several samples can result in a better pre-trained model for single-sample binning). When this flag is used, you must pass `data`, `data_split`, and `fasta` files for corresponding sample with same order. *Note:* You can only use this option when single-sample binning. Training from many samples with multi-sample binning is not supported (see [[training](../training/)] for more information).
-* [Before SemiBin 1.4] `--mode`: [single/several] Prior to SemiBin 1.4, using `--mode=several` was used for the same purpose as using `--train-from-many`. This option is still accepted for backwards compatibility, but is deprecated.
+* `--train-from-many`: When passed, train models from many samples (training across several samples can result in a better pre-trained model for single-sample binning). When this flag is used, you must pass `data`, `data_split`, and `fasta` files for corresponding sample with same order. *Note:* You can only use this option when single-sample binning. Training from many samples with multi-sample binning is not supported (see [[training](../training/)] for more information).
 
 #### Optional arguments
 

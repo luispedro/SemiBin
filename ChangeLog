@@ -4,6 +4,9 @@ Unreleased
 	* SemiBin: Remove '--environment' parameter in command that learns a new model (#218)
 	* SemiBin: Accept 'hybrid' as a synonym for 'long_reads' in --sequencing-type (#216)
 	* SemiBin1: removed
+	* docs: Fix multiple documentation issues (outdated output descriptions, wrong
+	  split_contigs output filename, removed CLI option references, inaccurate
+	  required arguments, and installation inconsistencies)
 
 Version 2.2.1 Dec 7 2025 by BigDataBiology
 	* SemiBin: Add support for `SEMIBIN_DEBUG` environment variable
