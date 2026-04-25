@@ -1,4 +1,6 @@
 Unreleased
+	* check_install: Soft-check for samtools (warns when missing in verbose
+	  mode but does not fail; samtools is only required for CRAM input)
 	* long-read binning: Remove stale output bins from previous runs before
 	  writing new results
 	* orffinding: Fix prodigal errors being silently ignored

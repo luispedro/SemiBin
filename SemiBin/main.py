@@ -636,6 +636,7 @@ def check_install(verbose, orf_finder=None, allow_missing_mmseqs2=False):
                 'FragGeneScan',
                 'prodigal',  # prodigal needs to be checked after FragGeneScan
                 'mmseqs',
+                'samtools',
                 ]
     has_fgs = False
     missing_deps = False
@@ -652,6 +653,9 @@ def check_install(verbose, orf_finder=None, allow_missing_mmseqs2=False):
                     missing_deps = True
                 elif verbose:
                     print(f'\t{dep} not found. Semi-supervised training (deprecated) will not be possible')
+            elif dep == 'samtools':
+                if verbose:
+                    print(f'\t{dep} not found. CRAM input will not be supported (BAM input is unaffected)')
             elif dep == 'prodigal':
                 if not has_fgs:
                     if orf_finder != 'fast-naive':

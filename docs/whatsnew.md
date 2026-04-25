@@ -11,6 +11,7 @@
 - Accept `hybrid` as a synonym for `long_reads` in `--sequencing-type` ([#216](https://github.com/BigDataBiology/SemiBin/issues/216))
 - Remove `--environment` parameter in command that learns a new model ([#218](https://github.com/BigDataBiology/SemiBin/issues/218))
 - Remove SemiBin1
+- `check_install`: now also looks for `samtools` and reports it (in verbose mode) when missing. This is a soft check: missing `samtools` does not cause `check_install` to fail, since `samtools` is only required for CRAM input.
 
 ### Documentation fixes
 
@@ -21,7 +22,7 @@
 - Update `docs/semibin2.md` and `docs/index.md` to reflect that only `SemiBin2` is installed since v2.2
 - Clarify `-b`/`-a` are alternatives (not both required) in `docs/subcommands.md` for `single_easy_bin`, `generate_sequence_features_single`, and `generate_sequence_features_multi`
 - Fix `docs/generate.md` path from `scripts/` to `script/`
-- Add samtools to listed source install dependencies and clarify Prodigal is optional in `docs/install.md`
+- Clarify Prodigal is optional in `docs/install.md`
 - Fix step numbering in `docs/usage.md` (steps went 1, 3, 4 → now 1, 2, 3)
 
 ### Internal improvements and bugfixes

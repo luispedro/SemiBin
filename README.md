@@ -91,12 +91,17 @@ You will need the following dependencies:
 
 - [Bedtools](http://bedtools.readthedocs.org/en/latest/)
 - [Hmmer](http://hmmer.org/)
-- [Samtools](https://github.com/samtools/samtools)
+
+Optionally:
+
+- [Samtools](https://github.com/samtools/samtools) (only required for CRAM (`.cram`) input; not needed for BAM input)
 
 The easiest way to install the dependencies is with [conda](https://conda.io):
 
 ```bash
-conda install -c bioconda bedtools hmmer samtools
+conda install -c bioconda bedtools hmmer
+# Optionally, for CRAM input support:
+conda install -c bioconda samtools
 ```
 
 Once the dependencies are installed, you can install SemiBin by running:
