@@ -82,6 +82,39 @@ def test_parse_args_backcompat():
     assert args.mode == 'several'
 
 
+def test_single_easy_bin_abundance_args():
+    args = parse_args(
+            ['single_easy_bin',
+                '-i', './test/coassembly_sample_data/input.fasta',
+                '-a',
+                './test/coassembly_sample_data/sample1.txt',
+                './test/coassembly_sample_data/sample2.txt',
+                './test/coassembly_sample_data/sample3.txt',
+                './test/coassembly_sample_data/sample4.txt',
+                './test/coassembly_sample_data/sample5.txt',
+                '-o', 'output'])
+    validate_normalize_args(logging, args)
+    assert args.training_type == 'self'
+    assert args.sequencing_type == 'short_read'
+
+
+def test_single_easy_bin_abundance_args_supervised():
+    for t in ['semi', 'self']:
+        args = parse_args(
+                ['single_easy_bin',
+                    f'--{t}-supervised',
+                    '-i', './test/coassembly_sample_data/input.fasta',
+                    '-a',
+                    './test/coassembly_sample_data/sample1.txt',
+                    './test/coassembly_sample_data/sample2.txt',
+                    './test/coassembly_sample_data/sample3.txt',
+                    './test/coassembly_sample_data/sample4.txt',
+                    './test/coassembly_sample_data/sample5.txt',
+                    '-o', 'output'])
+        validate_normalize_args(logging, args)
+        assert args.training_type == t
+
+
 def test_quiet_before_or_after():
     args = parse_args([
             '--quiet',

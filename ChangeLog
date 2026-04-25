@@ -1,4 +1,6 @@
 Unreleased
+	* single_easy_bin: Fix AttributeError on 'training_type' when running
+	  with abundance files (-a) instead of BAM files
 	* markers: Validate cached markers.hmmout against input fingerprint
 	  (FASTA size/mtime, binned_length, ORF finder) to avoid silently
 	  reusing stale marker calls when reruns target an existing output dir

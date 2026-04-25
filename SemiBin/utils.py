@@ -208,6 +208,7 @@ def validate_normalize_args(logger, args):
             logger.error(e.args[0])
             exit_with_error = True
     if args.cmd == 'single_easy_bin':
+        set_training_type(logger, args)
         if args.GTDB_reference is not None:
             expect_file(args.GTDB_reference)
         expect_file(args.contig_fasta)
@@ -215,8 +216,6 @@ def validate_normalize_args(logger, args):
             expect_file_list(args.bams)
         if args.abundances:
             expect_file_list(args.abundances)
-        else:
-            set_training_type(logger, args)
 
     if args.cmd == 'multi_easy_bin':
         set_training_type(logger, args)

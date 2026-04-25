@@ -4,6 +4,7 @@
 
 ### Bug fixes
 
+- `single_easy_bin`: fix `AttributeError: 'Namespace' object has no attribute 'training_type'` when running with abundance files (`-a`) instead of BAM files. `set_training_type()` was only invoked on the BAM path, so the abundance-based single-sample workflow crashed before doing any work.
 - Marker calling: validate the cached `markers.hmmout` against an input fingerprint (FASTA size/mtime, `binned_length`, ORF finder) before reusing it. Previously, reruns into an existing output directory could silently reuse stale marker calls from a different input or different parameters. On mismatch a warning is logged and markers are recomputed.
 - Long-read binning: remove stale output bins from previous runs before writing new results (previously, rerunning into the same output directory with fewer bins left old FASTA files behind)
 - Empty FASTA inputs now fail cleanly with `Input file ... is empty. Please check inputs.` instead of crashing with `ZeroDivisionError` (single-sample paths) or `ValueError: attempt to get argmax of an empty sequence` (multi-sample paths)
