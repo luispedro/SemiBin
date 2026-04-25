@@ -5,6 +5,7 @@
 ### Bug fixes
 
 - Long-read binning: remove stale output bins from previous runs before writing new results (previously, rerunning into the same output directory with fewer bins left old FASTA files behind)
+- Empty FASTA inputs now fail cleanly with `Input file ... is empty. Please check inputs.` instead of crashing with `ZeroDivisionError` (single-sample paths) or `ValueError: attempt to get argmax of an empty sequence` (multi-sample paths)
 
 ### User-visible changes
 

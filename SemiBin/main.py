@@ -917,6 +917,9 @@ def generate_sequence_features_multi(logger, args):
                 out.write(f'>{contig_name}\n{seq}\n')
                 contig_lengths.append(len(seq))
         sample_list.append(sample_name)
+    if not contig_lengths:
+        logger.error(f'Input file {args.contig_fasta} is empty. Please check inputs.')
+        sys.exit(1)
     if len(sample_list) != len(set(sample_list)):
         logger.error(f'Concatenated FASTA file {args.contig_fasta} not in expected format. Samples should follow each other.')
         sys.exit(1)

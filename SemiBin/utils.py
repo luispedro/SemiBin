@@ -419,15 +419,19 @@ def load_fasta(fasta_path: str, ratio: float):
         total_bps += len(seq)
         contig_dict[h] = seq
 
+    if total_bps == 0:
+        import logging
+        logger = logging.getLogger('SemiBin2')
+        logger.warning(f'No contigs in {fasta_path}')
+        # Caller is expected to detect the empty contig_dict and report a
+        # user-facing error; return safe defaults so we do not crash here.
+        return 1000, 4000, contig_dict
+
     computed_min_length = (
                 1000
                 if contig_bp_2500 / total_bps < ratio
                 else 2500)
     must_link_threshold = get_must_link_threshold(contig_length_list)
-    if not contig_dict:
-        import logging
-        logger = logging.getLogger('SemiBin2')
-        logger.warning(f'No contigs in {fasta_path}')
     return computed_min_length, must_link_threshold, contig_dict
 
 
