@@ -30,6 +30,7 @@
 
 - Fix prodigal errors being silently ignored (non-zero exit codes are now detected and reported)
 - Fix wrong input in semi-supervised unlabeled contrastive learning
+- Self-supervised training reads each input CSV once instead of every epoch (previously, single-sample mode reparsed the same file 15 times)
 
 ## Version 2.2.1
 

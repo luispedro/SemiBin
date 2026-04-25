@@ -1,4 +1,5 @@
 Unreleased
+	* self-supervised: Read training CSVs once instead of every epoch
 	* SemiBin: Empty FASTA inputs now fail cleanly with a user-facing error
 	  instead of crashing with ZeroDivisionError / argmax-on-empty
 	* check_install: Soft-check for samtools (warns when missing in verbose
