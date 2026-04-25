@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+### Bug fixes
+
+- Long-read binning: remove stale output bins from previous runs before writing new results (previously, rerunning into the same output directory with fewer bins left old FASTA files behind)
+
 ### User-visible changes
 
 - Accept `hybrid` as a synonym for `long_reads` in `--sequencing-type` ([#216](https://github.com/BigDataBiology/SemiBin/issues/216))

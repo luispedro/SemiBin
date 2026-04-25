@@ -1,4 +1,5 @@
 import os
+import shutil
 import torch
 import numpy as np
 from .utils import write_bins
@@ -98,6 +99,10 @@ def cluster_long_read(logger, model, data, device, is_combined,
                                        min_contig_len=binned_length, fasta_path=cfasta, contig_to_marker=True)
 
     output_bin_path = os.path.join(out, 'output_bins')
+    if os.path.exists(output_bin_path):
+        logger.warning(f'Previous output directory `{output_bin_path}` found. Over-writing it.')
+        shutil.rmtree(output_bin_path)
+    os.makedirs(output_bin_path, exist_ok=True)
 
     logger.debug('Running DBSCAN.')
     dist_matrix = kneighbors_graph(

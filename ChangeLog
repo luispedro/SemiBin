@@ -1,4 +1,6 @@
 Unreleased
+	* long-read binning: Remove stale output bins from previous runs before
+	  writing new results
 	* orffinding: Fix prodigal errors being silently ignored
 	* semi-supervised: Fix wrong input in unlabeled contrastive learning
 	* SemiBin: Remove '--environment' parameter in command that learns a new model (#218)
