@@ -252,7 +252,7 @@ def parse_args(args):
                        required=False,
                        type=int,
                        help='Number of epochs used in the training process (Default: 20).',
-                       dest='epoches',
+                       dest='epochs',
                        default=20)
 
 
@@ -260,7 +260,7 @@ def parse_args(args):
                        required=False,
                        type=int,
                        help='Number of epochs used in the training process (Default: 15).',
-                       dest='epoches',
+                       dest='epochs',
                        default=15)
 
 
@@ -491,7 +491,7 @@ def parse_args(args):
                        required=False,
                        type=int,
                        help='Number of epochs used in the training process (Default: 15).',
-                       dest='epoches',
+                       dest='epochs',
                        default=15)
 
         p.add_argument('--batch-size',
@@ -1102,7 +1102,7 @@ def training(logger, contig_fasta,
             cannot_link,
             is_combined=is_combined,
             batchsize=args.batchsize,
-            epoches=args.epoches,
+            epochs=args.epochs,
             device=device,
             num_process=args.num_process,
             mode=mode,
@@ -1114,7 +1114,7 @@ def training(logger, contig_fasta,
                            data_split,
                            is_combined,
                            args.batchsize,
-                           args.epoches,
+                           args.epochs,
                            device,
                            args.num_process,
                            mode)

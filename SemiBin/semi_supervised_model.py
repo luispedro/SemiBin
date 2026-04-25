@@ -198,7 +198,7 @@ class unsupervised_feature_Dataset(Dataset):
 
 
 def train_semi(logger, out, contig_fastas, binned_lengths, datas, data_splits, cannot_links, is_combined=True,
-          batchsize=2048, epoches=20, device=None, num_process = 8, mode = 'single', orf_finder = 'prodigal',
+          batchsize=2048, epochs=20, device=None, num_process = 8, mode = 'single', orf_finder = 'prodigal',
           prodigal_output_faa=None):
     """
     Train model from one sample(--mode single) or several samples(--mode several)
@@ -228,7 +228,7 @@ def train_semi(logger, out, contig_fastas, binned_lengths, datas, data_splits, c
     optimizer = torch.optim.Adam(model.parameters(), lr=1e-3)
     scheduler = lr_scheduler.StepLR(optimizer, step_size=1, gamma=0.9)
 
-    for epoch in tqdm(range(epoches)):
+    for epoch in tqdm(range(epochs)):
         for data_index in range(len(contig_fastas)):
             seed = estimate_seeds(
                 contig_fastas[data_index],

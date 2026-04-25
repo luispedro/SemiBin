@@ -20,7 +20,7 @@ subprocess.check_call(
     ['SemiBin2', 'train_self',
      '--data', 'test/train_data/data.csv',
      '--data-split', 'test/train_data/data_split.csv',
-     '--epoches', '1',
+     '--epochs', '1',
      '--batch-size', '2048',
      '--epochs', '1',
      '--batch-size', '2048',

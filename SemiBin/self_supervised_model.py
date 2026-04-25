@@ -16,7 +16,7 @@ def loss_function(embedding1, embedding2, label):
 
 
 def train_self(logger, datapaths, data_splits, is_combined=True,
-          batchsize=2048, epoches=15, device=None, num_process = 8, mode = 'single'):
+          batchsize=2048, epochs=15, device=None, num_process = 8, mode = 'single'):
     """
     Train model from one sample(mode=single) or several samples(mode=several)
 
@@ -49,7 +49,7 @@ def train_self(logger, datapaths, data_splits, is_combined=True,
     optimizer = torch.optim.Adam(model.parameters(), lr=1e-3)
     scheduler = lr_scheduler.StepLR(optimizer, step_size=1, gamma=0.9)
 
-    for epoch in tqdm(range(epoches)):
+    for epoch in tqdm(range(epochs)):
         for data_index, (datapath, data_split_path) in enumerate(zip(datapaths, data_splits)):
             if epoch == 0:
                 logger.debug(f'Reading training data for index {data_index}...')
