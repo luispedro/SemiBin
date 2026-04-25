@@ -2,7 +2,28 @@ import tempfile
 from .utils import maybe_uncompress, fasta_iter
 import os
 import sys
+import json
 import subprocess
+
+_MARKER_CACHE_SCHEMA_VERSION = 1
+
+
+def _marker_cache_fingerprint(fasta_path, binned_length, orf_finder, prodigal_output_faa):
+    '''Build a fingerprint of inputs that affect ``markers.hmmout``.
+
+    Uses (size, mtime_ns) of the FASTA rather than a content hash to keep the
+    check O(1) on multi-GB files.
+    '''
+    st = os.stat(fasta_path)
+    return {
+        'schema_version': _MARKER_CACHE_SCHEMA_VERSION,
+        'fasta_abspath': os.path.abspath(fasta_path),
+        'fasta_size': st.st_size,
+        'fasta_mtime_ns': st.st_mtime_ns,
+        'binned_length': int(binned_length),
+        'orf_finder': orf_finder,
+        'prodigal_output_faa': prodigal_output_faa,
+    }
 
 __normalize_marker_trans = {
     'TIGR00388': 'TIGR00389',
@@ -93,16 +114,40 @@ def estimate_seeds(fasta_path,
     Returns
     -------
     '''
+    import logging
     from .orffinding import run_orffinder
+    from .atomicwrite import atomic_write
+    logger = logging.getLogger("SemiBin2")
     with tempfile.TemporaryDirectory() as tdir:
+        fingerprint = _marker_cache_fingerprint(
+                fasta_path, binned_length, orf_finder, prodigal_output_faa)
         fasta_path = maybe_uncompress(fasta_path, tdir)
         if output is not None:
-            if os.path.exists(os.path.join(output, 'markers.hmmout')):
-                return get_marker(os.path.join(output, 'markers.hmmout'),
-                                    fasta_path, binned_length, multi_mode, orf_finder=orf_finder)
-            else:
-                os.makedirs(output, exist_ok=True)
-                target_dir = output
+            os.makedirs(output, exist_ok=True)
+            target_dir = output
+            hmm_output = os.path.join(output, 'markers.hmmout')
+            sidecar = hmm_output + '.json'
+            if os.path.exists(hmm_output):
+                cached = None
+                if os.path.exists(sidecar):
+                    try:
+                        with open(sidecar) as f:
+                            cached = json.load(f)
+                    except (OSError, ValueError) as e:
+                        logger.warning(
+                            f'Could not read marker cache metadata at {sidecar} ({e}); recomputing.')
+                if cached == fingerprint:
+                    return get_marker(hmm_output,
+                                        fasta_path, binned_length, multi_mode, orf_finder=orf_finder)
+                if cached is None:
+                    logger.warning(
+                        f'Found {hmm_output} without matching cache metadata; recomputing markers.')
+                else:
+                    logger.warning(
+                        f'Inputs to marker calling changed since {hmm_output} was written; recomputing markers.')
+                os.remove(hmm_output)
+                if os.path.exists(sidecar):
+                    os.remove(sidecar)
         else:
             target_dir = tdir
 
@@ -128,6 +173,10 @@ def estimate_seeds(fasta_path,
             sys.stderr.write(
                     f"Error: Running hmmsearch failed: {e}\n")
             sys.exit(1)
+
+        if output is not None:
+            with atomic_write(hmm_output + '.json', mode='wt', overwrite=True) as f:
+                json.dump(fingerprint, f, sort_keys=True)
 
         return get_marker(hmm_output, fasta_path, binned_length, multi_mode, orf_finder=orf_finder)
 

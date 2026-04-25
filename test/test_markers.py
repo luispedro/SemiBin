@@ -1,3 +1,8 @@
+import json
+import os
+import shutil
+from unittest import mock
+
 from SemiBin.markers import get_marker, estimate_seeds
 from io import StringIO
 
@@ -45,3 +50,68 @@ def test_estimate_seeds():
     seeds = estimate_seeds('test/single_sample_data/input.fasta',
                                 1000, num_process=1, orf_finder='fast-naive')
     assert len(seeds) > 0
+
+
+def _run_estimate_seeds(out, **kwargs):
+    defaults = dict(
+        fasta_path='test/single_sample_data/input.fasta',
+        binned_length=1000,
+        num_process=1,
+        orf_finder='fast-naive',
+        output=out,
+    )
+    defaults.update(kwargs)
+    return estimate_seeds(**defaults)
+
+
+def test_marker_cache_hit_skips_hmmsearch(tmp_path):
+    out = str(tmp_path / 'out')
+    _run_estimate_seeds(out)
+    assert os.path.exists(os.path.join(out, 'markers.hmmout'))
+    assert os.path.exists(os.path.join(out, 'markers.hmmout.json'))
+
+    with mock.patch('SemiBin.markers.subprocess.check_call') as check_call:
+        _run_estimate_seeds(out)
+        assert check_call.call_count == 0
+
+
+def test_marker_cache_invalidates_on_param_change(tmp_path):
+    out = str(tmp_path / 'out')
+    _run_estimate_seeds(out, binned_length=1000)
+    sidecar = os.path.join(out, 'markers.hmmout.json')
+    with open(sidecar) as f:
+        first = json.load(f)
+    assert first['binned_length'] == 1000
+
+    _run_estimate_seeds(out, binned_length=1500)
+    with open(sidecar) as f:
+        second = json.load(f)
+    assert second['binned_length'] == 1500
+
+
+def test_marker_cache_invalidates_when_sidecar_missing(tmp_path):
+    out = str(tmp_path / 'out')
+    _run_estimate_seeds(out)
+    os.remove(os.path.join(out, 'markers.hmmout.json'))
+
+    with mock.patch('SemiBin.markers.subprocess.check_call',
+                    wraps=__import__('subprocess').check_call) as check_call:
+        _run_estimate_seeds(out)
+        assert check_call.call_count == 1
+    assert os.path.exists(os.path.join(out, 'markers.hmmout.json'))
+
+
+def test_marker_cache_invalidates_on_fasta_change(tmp_path):
+    fasta = tmp_path / 'input.fasta'
+    shutil.copy('test/single_sample_data/input.fasta', fasta)
+    out = str(tmp_path / 'out')
+    _run_estimate_seeds(out, fasta_path=str(fasta))
+
+    # Bump mtime to a clearly different value to simulate a regenerated FASTA.
+    st = os.stat(fasta)
+    os.utime(fasta, ns=(st.st_atime_ns, st.st_mtime_ns + 10_000_000_000))
+
+    with mock.patch('SemiBin.markers.subprocess.check_call',
+                    wraps=__import__('subprocess').check_call) as check_call:
+        _run_estimate_seeds(out, fasta_path=str(fasta))
+        assert check_call.call_count == 1
