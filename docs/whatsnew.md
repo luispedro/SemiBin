@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+### Bug fixes
+
+- When the number of CPUs is not specified (or `-t 0` is used), SemiBin now uses the number of CPUs available to the process (respecting CPU affinity, as set by, e.g., `taskset` or SLURM) instead of the total number of CPUs on the machine, which could overcommit resources on shared nodes ([#228](https://github.com/BigDataBiology/SemiBin/issues/228)). Requesting more CPUs than are available now logs a warning. Negative values for `-t`/`-p` are now rejected with an error.
+
 ## Version 2.6.0
 
 *Released October 14, 2026*

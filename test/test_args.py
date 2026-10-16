@@ -291,3 +291,32 @@ def test_install_skills_installs(tmp_path):
     # Re-installing over an existing copy succeeds (over-writes in place)
     install_skills(logging, to_user=False, skills_dir=str(dest))
     assert skill.exists()
+
+
+def test_num_process_validation(monkeypatch):
+    import SemiBin.utils
+    monkeypatch.setattr(SemiBin.utils, 'available_cpus', lambda: 4)
+    base = ['bin',
+            '-i', 'test/bin_data/input.fasta',
+            '--data', 'test/bin_data/data.csv',
+            '--model', 'test/bin_data/model.pt',
+            '-o', 'output']
+    for t, expected in [('0', 4), ('2', 2), ('4', 4), ('32', 4)]:
+        args = parse_args(base + ['-t', t])
+        validate_normalize_args(logging, args)
+        assert args.num_process == expected
+
+    args = parse_args(base + ['-t', '-1'])
+    with pytest.raises(SystemExit):
+        validate_normalize_args(logging, args)
+
+
+def test_available_cpus(monkeypatch):
+    import os
+    from SemiBin.utils import available_cpus
+    assert available_cpus() >= 1
+
+    monkeypatch.delattr(os, 'process_cpu_count', raising=False)
+    monkeypatch.delattr(os, 'sched_getaffinity', raising=False)
+    monkeypatch.setattr(os, 'cpu_count', lambda: None)
+    assert available_cpus() == 1

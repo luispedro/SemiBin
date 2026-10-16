@@ -1,7 +1,6 @@
 from __future__ import annotations
 import os
 import subprocess
-import multiprocessing
 import logging
 import sys
 import random
@@ -112,6 +111,24 @@ def set_training_type(logger: logging.Logger, args: argparse.Namespace) -> None:
         args.training_type = 'semi'
 
 
+def available_cpus() -> int:
+    '''Return the number of CPUs that this process may use
+
+    Unlike ``multiprocessing.cpu_count()``, which returns the total number of
+    CPUs on the machine, this respects the CPU affinity of the process (as set
+    by, e.g., ``taskset`` or SLURM). CPU quotas (e.g., ``docker --cpus``) are
+    not taken into account. Always returns at least 1.
+    '''
+    if hasattr(os, 'process_cpu_count'):
+        # Python 3.13+
+        n = os.process_cpu_count()
+    elif hasattr(os, 'sched_getaffinity'):
+        n = len(os.sched_getaffinity(0))
+    else:
+        n = os.cpu_count()
+    return n or 1
+
+
 def validate_normalize_args(logger: logging.Logger, args: argparse.Namespace) -> None:
     '''Validate and normalize command line arguments
 
@@ -135,17 +152,18 @@ def validate_normalize_args(logger: logging.Logger, args: argparse.Namespace) ->
                 expect_file(f)
 
     if hasattr(args, 'num_process'):
-        # get available cpus for the process 
-        # as long as python < 3.13 use os.sched_getaffinity
-        # for python >= 3.13 use avail_proc=os.process_cpu_count()
-        avail_proc = len(os.sched_getaffinity(0)) if hasattr(os, "sched_getaffinity") else os.cpu_count()
-        if args.num_process == 0:
-            args.num_process = avail_proc 
-            logger.info(f'Setting number of CPUs to {args.num_process}')
-
-        if args.num_process > avail_proc:
+        avail_proc = available_cpus()
+        if args.num_process < 0:
+            logger.error(
+                f'Error: Number of CPUs cannot be negative (got {args.num_process})\n')
+            exit_with_error = True
+        elif args.num_process == 0:
             args.num_process = avail_proc
-            logger.info(f'number of CPUs reduced to {args.num_process}')
+            logger.info(f'Setting number of CPUs to {args.num_process}')
+        elif args.num_process > avail_proc:
+            logger.warning(
+                f'Requested {args.num_process} CPUs, but only {avail_proc} are available; using {avail_proc}')
+            args.num_process = avail_proc
         os.environ['NUMEXPR_NUM_THREADS'] = str(args.num_process)
         os.environ['NUMEXPR_MAX_THREADS'] = str(args.num_process)
         os.environ['OMP_NUM_THREADS'] = str(args.num_process)

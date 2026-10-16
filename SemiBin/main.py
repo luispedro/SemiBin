@@ -390,7 +390,7 @@ def semibin_arg_parser():
         p.add_argument('-p', '--processes', '-t', '--threads',
                    required=False,
                    type=int,
-                   help='Number of CPUs used (pass the value 0 to use all CPUs, default: 0)',
+                   help='Number of CPUs used (pass the value 0 to use all CPUs available to the process, default: 0)',
                    dest='num_process',
                    default=0,
                    metavar=''

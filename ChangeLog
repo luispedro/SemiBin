@@ -1,4 +1,9 @@
 Unreleased
+	* SemiBin: Use the number of CPUs available to the process (respecting
+	  CPU affinity, e.g., as set by taskset or SLURM) instead of the total
+	  number of CPUs on the machine (#228). Thanks to Eric Deveaud
+	  (@EricDeveaud) for reporting the bug and contributing the fix (#229)
+	* SemiBin: Reject a negative number of CPUs (-p/-t)
 
 Version 2.6.0 Oct 14 2026 by BigDataBiology
 	* SemiBin: Require torch>=2.4 (older builds are incompatible with NumPy 2)
